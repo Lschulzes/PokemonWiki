@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { pokeApi } from "../api";
 import { PokemonListResponse, SmallPokemon } from "../interfaces";
+import confetti from "canvas-confetti";
 
 export const useFavorites = () => {
   const [favorites, setFavorites] = useState<string[]>([]);
@@ -33,6 +34,13 @@ export const useFavorites = () => {
         newFavorites = favorites.filter((el) => el !== id);
       } else {
         newFavorites = favorites.concat([id]);
+        confetti({
+          zIndex: 999,
+          particleCount: 100,
+          angle: -100,
+          spread: 100,
+          origin: { x: 1, y: 0 },
+        });
       }
       setFavorites(newFavorites);
       localStorage.setItem("favorites_pokemon", JSON.stringify(newFavorites));

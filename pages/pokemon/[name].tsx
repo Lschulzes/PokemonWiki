@@ -88,17 +88,24 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
   const { data } = await pokeApi.get<PokemonListResponse>("/pokemon?limit=151");
 
   return {
-    paths: data.results.map((el) => ({ params: { id: el.name } })),
+    paths: data.results.map((el) => ({ params: { name: el.name } })),
     fallback: false,
   };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const { id } = params as { id: string };
+  const { name } = params as { name: string };
 
-  const { data } = await pokeApi.get<PokemonData>(`/pokemon/${id}`);
+  const { data } = await pokeApi.get<PokemonData>(`/pokemon/${name}`);
 
-  return { props: { pokemon: data } };
+  const pokemon = {
+    id: data.id,
+    name: data.name,
+    sprites: data.sprites,
+    stats: data.stats,
+  };
+
+  return { props: { pokemon } };
 };
 
 export default Pokemon;
