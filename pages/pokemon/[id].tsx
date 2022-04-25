@@ -12,8 +12,8 @@ interface PokemonProps {
 
 export const Pokemon = ({ pokemon }: PokemonProps) => {
   const { toggleFavorite, isFavorited } = useFavorites();
-  const favorited = isFavorited(pokemon.name ?? "");
-  const onToggleFavorite = () => toggleFavorite(pokemon.name || "");
+  const favorited = isFavorited(String(pokemon.id) ?? "");
+  const onToggleFavorite = () => toggleFavorite(String(pokemon.id) || "");
 
   return (
     <Layout title={`${pokemon.name}`}>

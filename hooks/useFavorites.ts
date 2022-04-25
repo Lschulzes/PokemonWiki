@@ -14,17 +14,25 @@ export const useFavorites = () => {
 
   useEffect(() => {
     pokeApi.get<PokemonListResponse>("/pokemon?limit=151").then((el) => {
-      setAllPokemons(el.data.results);
+      setAllPokemons(
+        el.data.results.map((el, i) => ({
+          ...el,
+          img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${
+            1 + i
+          }.svg`,
+          id: 1 + i,
+        }))
+      );
     });
   }, []);
 
   const toggleFavorite = useCallback(
-    (slug: string) => {
+    (id: string) => {
       let newFavorites: any = [];
-      if (favorites.findIndex((el) => el === slug) >= 0) {
-        newFavorites = favorites.filter((el) => el !== slug);
+      if (favorites.findIndex((el) => el === id) >= 0) {
+        newFavorites = favorites.filter((el) => el !== id);
       } else {
-        newFavorites = favorites.concat([slug]);
+        newFavorites = favorites.concat([id]);
       }
       setFavorites(newFavorites);
       localStorage.setItem("favorites_pokemon", JSON.stringify(newFavorites));
@@ -33,8 +41,8 @@ export const useFavorites = () => {
   );
 
   const isFavorited = useCallback(
-    (slug: string) => {
-      return favorites.includes(slug);
+    (id: string) => {
+      return favorites.includes(id);
     },
     [favorites]
   );

@@ -9,15 +9,9 @@ import { PokemonListResponse } from "../../interfaces";
 const FavoritesPage = () => {
   const { favorites, allPokemons } = useFavorites();
 
-  const pokemons = allPokemons
-    .filter((el) => favorites.includes(el.name))
-    .map((el, i) => ({
-      ...el,
-      img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${
-        1 + i
-      }.svg`,
-      id: 1 + i,
-    }));
+  const pokemons = allPokemons.filter((el) =>
+    favorites.includes(String(el.id))
+  );
 
   return (
     <Layout title="Pokemons - Favorites">
