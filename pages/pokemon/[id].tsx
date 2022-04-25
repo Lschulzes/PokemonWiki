@@ -3,6 +3,7 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import { pokeApi } from "../../api";
 import { Layout } from "../../components/layouts/Layout";
 import PokemonStats from "../../components/PokemonStats";
+import { useFavorites } from "../../hooks/useFavorites";
 import { Pokemon as PokemonData, PokemonListResponse } from "../../interfaces";
 
 interface PokemonProps {
@@ -10,9 +11,12 @@ interface PokemonProps {
 }
 
 export const Pokemon = ({ pokemon }: PokemonProps) => {
-  console.log(pokemon);
+  const { toggleFavorite, isFavorited } = useFavorites();
+  const favorited = isFavorited(pokemon.name ?? "");
+  const onToggleFavorite = () => toggleFavorite(pokemon.name || "");
+
   return (
-    <Layout title={`Pokemon ${pokemon.name}`}>
+    <Layout title={`${pokemon.name}`}>
       <Grid.Container gap={2} css={{ marginTop: "1rem" }}>
         <Grid xs={12} sm={6}>
           <Card hoverable css={{ padding: "30px" }}>
@@ -39,8 +43,8 @@ export const Pokemon = ({ pokemon }: PokemonProps) => {
             >
               <Text h1>{pokemon.name}</Text>
 
-              <Button color={"gradient"} ghost>
-                Add to Favorites
+              <Button color={"gradient"} ghost onClick={onToggleFavorite}>
+                {favorited ? "Remove from" : "Add to"} Favorites
               </Button>
             </Card.Header>
             <Card.Body>
@@ -81,8 +85,8 @@ export const Pokemon = ({ pokemon }: PokemonProps) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async (ctx) => {
-  // const pokemons151 = [...new Array(151)].map((_, i) => `${1 + i}`);
   const { data } = await pokeApi.get<PokemonListResponse>("/pokemon?limit=151");
+
   return {
     paths: data.results.map((el) => ({ params: { id: el.name } })),
     fallback: false,
