@@ -40,7 +40,11 @@ export const Pokemon = ({ pokemon }: PokemonProps) => {
         <Grid xs={12} sm={6}>
           <Card>
             <Card.Header
-              css={{ display: "flex", justifyContent: "space-between" }}
+              css={{
+                display: "flex",
+                justifyContent: "space-between",
+                flexWrap: "wrap",
+              }}
             >
               <Text h1>{RevertSlug(pokemon.name + "")}</Text>
 

@@ -65,6 +65,13 @@ const StyledPokemonStats = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+
+  @media (max-width: 698px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 0.5rem;
+    row-gap: 1rem;
+  }
 `;
 
 const StyledStat = styled.div`
