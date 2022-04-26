@@ -1,5 +1,6 @@
 ## PokemonWiki
-![image](https://user-images.githubusercontent.com/77251840/165297713-04ce5ac0-286f-4387-95cb-6cc7d3b51fe4.png)
+![image](https://user-images.githubusercontent.com/77251840/165298446-c575f07c-e001-4b07-bd4e-3db672d61389.png)
+
 ## Getting Started
 
 First, run the development server:
