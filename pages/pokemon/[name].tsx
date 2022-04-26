@@ -3,6 +3,7 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import { pokeApi } from "../../api";
 import { Layout } from "../../components/layouts/Layout";
 import PokemonStats from "../../components/PokemonStats";
+import { RevertSlug } from "../../helpers";
 import { useFavorites } from "../../hooks/useFavorites";
 import { Pokemon as PokemonData, PokemonListResponse } from "../../interfaces";
 
@@ -41,7 +42,7 @@ export const Pokemon = ({ pokemon }: PokemonProps) => {
             <Card.Header
               css={{ display: "flex", justifyContent: "space-between" }}
             >
-              <Text h1>{pokemon.name}</Text>
+              <Text h1>{RevertSlug(pokemon.name + "")}</Text>
 
               <Button color={"gradient"} ghost onClick={onToggleFavorite}>
                 {favorited ? "Remove from" : "Add to"} Favorites
